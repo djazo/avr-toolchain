@@ -24,12 +24,12 @@ ENV LIBC_VERSION 2.0.0
 RUN mkdir -p /tmp/src/binutils /tmp/src/gcc/mpc /tmp/src/gcc/mpfr /tmp/src/gcc/gmp /tmp/src/avrlibc /tmp/dl /opt/toolchain
 # get sources
 
-RUN curl -L -o /tmp/dl/binutils.tar.bz2 "https://ftpmirror.gnu.org/binutils/binutils-${BINUTILS_VERSION}.tar.bz2" ; \
-	curl -L -o /tmp/dl/mpfr.tar.bz2 "http://ftp.funet.fi/pub/gnu/ftp.gnu.org/gnu/mpfr/mpfr-${MPFR_VERSION}.tar.bz2" ; \
-	curl -L -o /tmp/dl/mpc.tar.gz "http://ftp.funet.fi/pub/gnu/ftp.gnu.org/gnu/mpc/mpc-${MPC_VERSION}.tar.gz" ; \
-	curl -L -o /tmp/dl/gmp.tar.bz2 "http://ftp.funet.fi/pub/gnu/ftp.gnu.org/gnu/gmp/gmp-${GMP_VERSION}.tar.bz2" ; \
-	curl -L -o /tmp/dl/gcc.tar.xz "http://ftp.funet.fi/pub/gnu/ftp.gnu.org/gnu/gcc/gcc-${GCC_VERSION}/gcc-${GCC_VERSION}.tar.xz" ; \
-	curl -L -o /tmp/dl/avrlibc.tar.bz2 "http://download.savannah.gnu.org/releases/avr-libc/avr-libc-${LIBC_VERSION}.tar.bz2"
+RUN curl -s -L -o /tmp/dl/binutils.tar.bz2 "https://ftpmirror.gnu.org/binutils/binutils-${BINUTILS_VERSION}.tar.bz2" ; \
+	curl -s -L -o /tmp/dl/mpfr.tar.bz2 "http://ftp.funet.fi/pub/gnu/ftp.gnu.org/gnu/mpfr/mpfr-${MPFR_VERSION}.tar.bz2" ; \
+	curl -s -L -o /tmp/dl/mpc.tar.gz "http://ftp.funet.fi/pub/gnu/ftp.gnu.org/gnu/mpc/mpc-${MPC_VERSION}.tar.gz" ; \
+	curl -s -L -o /tmp/dl/gmp.tar.bz2 "http://ftp.funet.fi/pub/gnu/ftp.gnu.org/gnu/gmp/gmp-${GMP_VERSION}.tar.bz2" ; \
+	curl -s -L -o /tmp/dl/gcc.tar.xz "http://ftp.funet.fi/pub/gnu/ftp.gnu.org/gnu/gcc/gcc-${GCC_VERSION}/gcc-${GCC_VERSION}.tar.xz" ; \
+	curl -s -L -o /tmp/dl/avrlibc.tar.bz2 "http://download.savannah.gnu.org/releases/avr-libc/avr-libc-${LIBC_VERSION}.tar.bz2"
 
 # extract
 
