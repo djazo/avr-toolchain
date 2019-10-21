@@ -38,7 +38,7 @@ RUN tar xjf /tmp/dl/binutils.tar.bz2 --strip-components=1 -C /tmp/src/binutils ;
 	tar xjf /tmp/dl/mpfr.tar.bz2 --strip-components=1 -C /tmp/src/gcc/mpfr ; \
 	tar xzf /tmp/dl/mpc.tar.gz --strip-components=1 -C /tmp/src/gcc/mpc ; \
 	tar xjf /tmp/dl/gmp.tar.bz2 --strip-components=1 -C /tmp/src/gcc/gmp ; \
-	tar xjf /tmp/dl/avrlibc.tar.bz2 --strip-components= -C /tmp/src/avrlibc ; \
+	tar xjf /tmp/dl/avrlibc.tar.bz2 --strip-components=1 -C /tmp/src/avrlibc ; \
 # remove downloads
 	rm -rf /tmp/dl
 
@@ -102,4 +102,4 @@ RUN apk add --no-cache \
 	--nobanner --format '%n#p' --recursive /opt/toolchain \
 	| tr ',' '\n' \
 	| sort -u \
-	| awk 'system("[ -e /opt/toolchain/lib" $1 " ]") == 0 { next } { print "so:" $1 }')
+	| awk 'system("[ -e /opt/toolchain/lib/" $1 " ]") == 0 { next } { print "so:" $1 }')
