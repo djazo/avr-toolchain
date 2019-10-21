@@ -47,7 +47,7 @@ RUN tar xjf /tmp/dl/binutils.tar.bz2 --strip-components=1 -C /tmp/src/binutils ;
 RUN mkdir -p /tmp/build/binutils ; \
 	cd /tmp/build/binutils ; \
 	/tmp/src/binutils/configure --prefix=/opt/toolchain --target=avr --disable-nls ; \
-	make -j${MAKE_THREADS} ; \
+	make -j$(nproc) ; \
 	make install ; \
 	cd / ; \
 	rm -rf /tmp/src/binutils ; \
@@ -62,7 +62,7 @@ ENV PATH="/opt/toolchain/bin:${PATH}"
 RUN mkdir -p /tmp/build/gcc ; \
 	cd /tmp/build/gcc ; \
 	/tmp/src/gcc/configure --prefix=/opt/toolchain --target=avr --enable-languages=c,c++ --disable-nls --disable-libssp --with-dwarf2 ; \
-	make -j${MAKE_THREADS} ; \
+	make -j$(nproc) ; \
 	make install ; \
 	cd / ; \
 	rm -rf /tmp/src/gcc ; \
@@ -73,7 +73,7 @@ RUN mkdir -p /tmp/build/gcc ; \
 RUN mkdir -p /tmp/build/avrlibc ; \
 	cd /tmp/build/avrlibc ; \
 	/tmp/src/avrlibc/configure --prefix=/opt/toolchain --build=x86_64-alpine-linux-musl --host=avr \
-	make -j${MAKE_THREADS} ; \
+	make -j$(nproc) ; \
 	make install ; \
 	cd / ; \
 	rm -rf /tmp/src/avrlibc ; \
