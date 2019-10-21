@@ -24,7 +24,8 @@ ENV LIBC_VERSION 2.0.0
 RUN mkdir -p /tmp/src/binutils /tmp/src/gcc/mpc /tmp/src/gcc/mpfr /tmp/src/gcc/gmp /tmp/src/avrlibc /tmp/dl /opt/toolchain
 # get sources
 
-RUN curl -s -L -o /tmp/dl/binutils.tar.bz2 "https://ftpmirror.gnu.org/binutils/binutils-${BINUTILS_VERSION}.tar.bz2" ; \
+RUN echo "Downloading sources ..." ; \
+	curl -s -L -o /tmp/dl/binutils.tar.bz2 "https://ftpmirror.gnu.org/binutils/binutils-${BINUTILS_VERSION}.tar.bz2" ; \
 	curl -s -L -o /tmp/dl/mpfr.tar.bz2 "http://ftp.funet.fi/pub/gnu/ftp.gnu.org/gnu/mpfr/mpfr-${MPFR_VERSION}.tar.bz2" ; \
 	curl -s -L -o /tmp/dl/mpc.tar.gz "http://ftp.funet.fi/pub/gnu/ftp.gnu.org/gnu/mpc/mpc-${MPC_VERSION}.tar.gz" ; \
 	curl -s -L -o /tmp/dl/gmp.tar.bz2 "http://ftp.funet.fi/pub/gnu/ftp.gnu.org/gnu/gmp/gmp-${GMP_VERSION}.tar.bz2" ; \
@@ -33,7 +34,8 @@ RUN curl -s -L -o /tmp/dl/binutils.tar.bz2 "https://ftpmirror.gnu.org/binutils/b
 
 # extract
 
-RUN tar xjf /tmp/dl/binutils.tar.bz2 --strip-components=1 -C /tmp/src/binutils ; \
+RUN echo "Extracting ..." ; \
+	tar xjf /tmp/dl/binutils.tar.bz2 --strip-components=1 -C /tmp/src/binutils ; \
 	tar xJf /tmp/dl/gcc.tar.xz --strip-components=1 -C /tmp/src/gcc ; \
 	tar xjf /tmp/dl/mpfr.tar.bz2 --strip-components=1 -C /tmp/src/gcc/mpfr ; \
 	tar xzf /tmp/dl/mpc.tar.gz --strip-components=1 -C /tmp/src/gcc/mpc ; \
@@ -44,10 +46,11 @@ RUN tar xjf /tmp/dl/binutils.tar.bz2 --strip-components=1 -C /tmp/src/binutils ;
 
 # build binutils
 
-RUN mkdir -p /tmp/build/binutils ; \
+RUN echo "Building binutils ..." ; \
+	mkdir -p /tmp/build/binutils ; \
 	cd /tmp/build/binutils ; \
 	/tmp/src/binutils/configure --prefix=/opt/toolchain --target=avr --disable-nls ; \
-	make -j$(nproc) ; \
+	make -s -j$(nproc) ; \
 	make install ; \
 	cd / ; \
 	rm -rf /tmp/src/binutils ; \
@@ -59,10 +62,11 @@ ENV PATH="/opt/toolchain/bin:${PATH}"
 
 # build gcc
 
-RUN mkdir -p /tmp/build/gcc ; \
+RUN echo "Building gcc ..." ; \
+	mkdir -p /tmp/build/gcc ; \
 	cd /tmp/build/gcc ; \
 	/tmp/src/gcc/configure --prefix=/opt/toolchain --target=avr --enable-languages=c,c++ --disable-nls --disable-libssp --with-dwarf2 ; \
-	make -j$(nproc) ; \
+	make -s -j$(nproc) ; \
 	make install ; \
 	cd / ; \
 	rm -rf /tmp/src/gcc ; \
@@ -70,10 +74,11 @@ RUN mkdir -p /tmp/build/gcc ; \
 
 # build avr-libc
 
-RUN mkdir -p /tmp/build/avrlibc ; \
+RUN echo "Building avr libc ..." ; \
+	mkdir -p /tmp/build/avrlibc ; \
 	cd /tmp/build/avrlibc ; \
 	/tmp/src/avrlibc/configure --prefix=/opt/toolchain --build=x86_64-alpine-linux-musl --host=avr \
-	make -j$(nproc) ; \
+	make -s -j$(nproc) ; \
 	make install ; \
 	cd / ; \
 	rm -rf /tmp/src/avrlibc ; \
@@ -82,13 +87,7 @@ RUN mkdir -p /tmp/build/avrlibc ; \
 FROM alpine:3.10.2
 
 LABEL maintainer="arto.kitula@gmail.com"
-LABEL version="0.9.1"
 LABEL description="AVR toolchain"
-
-RUN apk add --no-cache \
-	cmake \
-	ninja \
-	make
 
 ENV PATH="/opt/toolchain/bin:${PATH}"
 
