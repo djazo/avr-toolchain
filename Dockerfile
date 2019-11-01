@@ -1,4 +1,4 @@
-FROM alpine:3.10.2 AS bob
+FROM alpine:3.10.3 AS bob
 
 ENV MAKE_THREADS 12
 
@@ -84,7 +84,7 @@ RUN echo "Building avr libc ..." ; \
 	rm -rf /tmp/src/avrlibc ; \
 	rm -rf /tmp/build/avrlibc
 
-FROM alpine:3.10.2
+FROM alpine:3.10.3
 
 LABEL maintainer="arto.kitula@gmail.com"
 LABEL description="AVR toolchain"
