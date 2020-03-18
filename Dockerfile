@@ -1,7 +1,5 @@
 FROM alpine:3.11.3 AS bob
 
-ENV MAKE_THREADS 4
-
 RUN apk add --no-cache \
 	bison \
 	build-base \
@@ -13,11 +11,11 @@ RUN apk add --no-cache \
 
 # set versions
 
-ENV BINUTILS_VERSION 2.32
+ENV BINUTILS_VERSION 2.34
 ENV MPFR_VERSION 4.0.2
 ENV MPC_VERSION 1.1.0
-ENV GMP_VERSION 6.1.2
-ENV GCC_VERSION 9.2.0
+ENV GMP_VERSION 6.2.0
+ENV GCC_VERSION 9.3.0
 ENV LIBC_VERSION 2.0.0
 
 
