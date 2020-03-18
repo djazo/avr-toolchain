@@ -1,6 +1,6 @@
-FROM alpine:3.10.3 AS bob
+FROM alpine:3.11.3 AS bob
 
-ENV MAKE_THREADS 12
+ENV MAKE_THREADS 4
 
 RUN apk add --no-cache \
 	bison \
@@ -8,7 +8,7 @@ RUN apk add --no-cache \
 	ca-certificates \
 	curl \
 	file \
-	flex \ 
+	flex \
 	git
 
 # set versions
