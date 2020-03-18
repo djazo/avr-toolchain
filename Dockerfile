@@ -7,7 +7,8 @@ RUN apk add --no-cache \
 	curl \
 	file \
 	flex \
-	git
+  git \
+  texinfo
 
 # set versions
 
@@ -82,10 +83,7 @@ RUN echo "Building avr libc ..." ; \
 	rm -rf /tmp/src/avrlibc ; \
 	rm -rf /tmp/build/avrlibc
 
-FROM alpine:3.10.3
-
-LABEL maintainer="arto.kitula@gmail.com"
-LABEL description="AVR toolchain"
+FROM alpine:3.11.3
 
 ENV PATH="/opt/toolchain/bin:${PATH}"
 
@@ -99,4 +97,10 @@ RUN apk add --no-cache \
 	--nobanner --format '%n#p' --recursive /opt/toolchain \
 	| tr ',' '\n' \
 	| sort -u \
-	| awk 'system("[ -e /opt/toolchain/lib/" $1 " ]") == 0 { next } { print "so:" $1 }')
+  | awk 'system("[ -e /opt/toolchain/lib/" $1 " ]") == 0 { next } { print "so:" $1 }')
+
+LABEL com.embeddedreality.image.maintainer="arto.kitula@gmail.com" \
+  com.embeddedreality.image.title="avr-toolchain" \
+  com.embeddedreality.image.version="1.0.0" \
+  com.embeddedreality.image.description="AVR toolchain"
+
