@@ -1,4 +1,4 @@
-FROM alpine:3.11.3 AS bob
+FROM alpine:3.11.6 AS bob
 
 RUN apk add --no-cache \
 	bison \
@@ -16,7 +16,7 @@ ENV BINUTILS_VERSION 2.34
 ENV MPFR_VERSION 4.0.2
 ENV MPC_VERSION 1.1.0
 ENV GMP_VERSION 6.2.0
-ENV GCC_VERSION 9.3.0
+ENV GCC_VERSION 10.1.0
 ENV LIBC_VERSION 2.0.0
 
 
@@ -81,9 +81,12 @@ RUN echo "Building avr libc ..." ; \
 	make install ; \
 	cd / ; \
 	rm -rf /tmp/src/avrlibc ; \
-	rm -rf /tmp/build/avrlibc
+  rm -rf /tmp/build/avrlibc
 
-FROM alpine:3.11.3
+RUN mkdir -p /opt/toolchain/etc ; \
+  echo "/opt/toolchain/lib" > /opt/toolchain/etc/ld-musl-x86_64.path
+
+FROM alpine:3.11.6
 
 ENV PATH="/opt/toolchain/bin:${PATH}"
 
@@ -101,6 +104,6 @@ RUN apk add --no-cache \
 
 LABEL com.embeddedreality.image.maintainer="arto.kitula@gmail.com" \
   com.embeddedreality.image.title="avr-toolchain" \
-  com.embeddedreality.image.version="1.0.0" \
+  com.embeddedreality.image.version="10.1" \
   com.embeddedreality.image.description="AVR toolchain"
 
