@@ -12,6 +12,7 @@ steps:
     image: busybox
     commands:
       - mkdir -p /cache/${DRONE_REPO}/docker
+      - echo "10.1,latest" > .tags
     volumes:
       - name: cache
         path: /cache
