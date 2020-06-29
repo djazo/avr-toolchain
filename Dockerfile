@@ -1,4 +1,4 @@
-FROM alpine:3.11.6 AS bob
+FROM alpine:3.12.0 AS bob
 
 RUN apk add --no-cache \
 	bison \
@@ -86,7 +86,7 @@ RUN echo "Building avr libc ..." ; \
 RUN mkdir -p /opt/toolchain/etc ; \
   echo "/opt/toolchain/lib" > /opt/toolchain/etc/ld-musl-x86_64.path
 
-FROM alpine:3.11.6
+FROM alpine:3.12.0
 
 ENV PATH="/opt/toolchain/bin:${PATH}"
 
